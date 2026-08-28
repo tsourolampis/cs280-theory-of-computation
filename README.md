@@ -1,1 +1,1 @@
-# cs280-theory-of-computation
+# CS280 Theory of Computation (Θεωρία Υπολογισμού) 
