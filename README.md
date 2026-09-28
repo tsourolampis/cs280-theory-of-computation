@@ -35,7 +35,7 @@ All times are local to Crete. Consult the course website and eLearn announcement
 1. Read the [syllabus][syllabus] and the policies on the [course website][course].
 2. Follow the lecture slides and accompanying readings; work through the exercises as the material is introduced.
 3. Use Friday tutorials and office hours to discuss proof ideas, questions, and difficulties.
-4. Prepare exercise submissions in **LaTeX**. [Overleaf](https://www.overleaf.com/) is an online option.
+4. Prepare exercise submissions in **LaTeX**. [Overleaf](https://www.overleaf.com/) is an online option. The source code can be found [here](https://www.overleaf.com/project/6abab1480d5b1f2a3205f468/share#faf29b9f0b1f4389395482c5fc000d5d73d68473806be00a) as well.
 5. Explore Lean when it appears in the course. No prior Lean experience is required.
 
 ## Lecture materials
