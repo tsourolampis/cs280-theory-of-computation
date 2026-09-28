@@ -1,0 +1,514 @@
+% !TeX program = xelatex
+% Μεταγλώττιση: xelatex lec3_exercises.tex
+% Στο Overleaf: επιλέξτε XeLaTeX ως compiler.
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\setmainfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\setmonofont{DejaVu Sans Mono}[Scale=0.88]
+\newfontfamily\greekfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\newfontfamily\greekfonttt{DejaVu Sans Mono}[Scale=0.88]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage[unicode,hidelinks]{hyperref}
+\hypersetup{pdftitle={Ασκήσεις 3ης διάλεξης: Βασικά μαθηματικά εργαλεία}}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+\theoremstyle{definition}
+\newtheorem{question}{Άσκηση}
+\newcommand{\HALT}{\operatorname{HALT}}
+\setlist[enumerate]{label=(\alph*),leftmargin=*,itemsep=3pt,topsep=5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small ΗΥ280 (2026) - Τσουρακάκης}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\DefineVerbatimEnvironment{pseudocode}{Verbatim}{fontsize=\small,xleftmargin=1em}
+
+
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Pow}{\mathcal{P}}
+\newcommand{\Post}{\mathrm{Post}_R}
+\newcommand{\cl}{\mathrm{cl}_R}
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\st}{$^{\bigstar}$}  % δυσκολότερο
+\newcommand{\enumlabels}{\renewcommand{\labelenumi}{(\greekalph{enumi})}}
+\newcommand{\gi}[1]{\item[(#1)]}
+
+\begin{document}
+\begin{center}
+\horrule{0.4pt}\\[0.15cm]
+{\large\textbf{ΗΥ 280 \textemdash{} Θεωρία Υπολογισμού}}\\[0.1cm]
+{Ασκήσεις 3ης διάλεξης}\\[0.1cm]
+{Χαράλαμπος Ε. Τσουρακάκης}\\
+\horrule{0.4pt}
+\end{center}
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.93\linewidth}
+\textbf{Πώς να δουλέψετε το φύλλο.} 
+
+\begin{itemize}
+\item     Η πλειοψηφία  είναι ασκήσεις βασικής  κατανόησης:
+πρώτα ένας υπολογισμός για να «πιάσετε» τον ορισμό, μετά μια μικρή απόδειξη που
+μιμείται ένα παράδειγμα από τις διαφάνειες και, τέλος, μια μικρή παραλλαγή.
+\item Οι ασκήσεις με \st{} είναι λίγο πιο απαιτητικές.
+
+ 
+\item {\bf Ξεκινήστε νωρίς και ελάτε στις ώρες γραφείου}
+\item Σύμβαση: $\N=\{0,1,2,\dots\}$.
+
+
+\item {\bf Παραδοτέες στο τέλος του εξαμήνου από αυτό το φύλλο}. Οι υπόλοιπες θα παραμείνουν για προαιρετική εξάσκηση. 
+\end{itemize}
+
+
+\begin{center}
+\begin{tabular}{@{}lc@{}}
+\toprule
+\textbf{Ενότητα} & \textbf{Ασκήσεις για παράδοση}\\
+\midrule
+Σύνολα, υποσύνολα, δυναμοσύνολο & \textbf{2, 6}\\
+Ζεύγη, σχέσεις, συναρτήσεις & \textbf{9, 12, 14}\\
+Ισοπληθικότητα, αριθμησιμότητα, dovetailing & \textbf{16, 17, 18, 19, 20}\\
+Γραφήματα, ιδιότητες σχέσεων, κλειστότητες & \textbf{24, 27}\\
+Συνεπαγωγή, αντιθετοαντιστροφή, ποσοδείκτες & \textbf{33, 34}\\
+Τεχνικές απόδειξης & \textbf{37, 39}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+
+\end{minipage}%
+}
+\end{center}
+\medskip
+%=================================================================
+\section{Σύνολα, υποσύνολα, δυναμοσύνολο}
+%=================================================================
+
+\begin{question}[Υπολογισμός]
+Έστω σύμπαν $Q=\{p,q,r,s\}$, $A=\{p,q\}$ και $B=\{q,r\}$. Υπολογίστε τα
+$A\cup B$, $A\cap B$, $A\setminus B$, $B\setminus A$, $Q\setminus A$ και
+$Q\setminus(A\cap B)$. Επαληθεύστε στο παράδειγμα ότι
+$Q\setminus(A\cup B)=(Q\setminus A)\cap(Q\setminus B)$.
+\end{question}
+
+
+\begin{question}[Σωστό ή λάθος;]
+Αιτιολογήστε σύντομα την απάντησή σας για κάθε πρόταση.
+\begin{enumerate}[label=(\alph*),itemsep=0pt]
+\gi{α} $\emptyset\in\{\emptyset\}$
+\gi{β} $\emptyset\subseteq\{\emptyset\}$
+\gi{γ} $\{\emptyset\}\subseteq\emptyset$
+\gi{δ} $\{p\}\in\{p,q\}$
+\gi{ε} $\{p\}\subseteq\{p,q\}$
+\gi{στ} $\{p,p,q\}=\{q,p\}$
+\gi{ζ} $|\{\emptyset,\{\emptyset\}\}|=2$
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Μίμηση του παραδείγματος των διαφανειών]
+Για σύνολα $A,B$ δείξτε ότι
+$\;A\subseteq B \iff A\cap B=A.$
+Αποδείξτε ρητά και τις δύο κατευθύνσεις.
+\end{question}
+
+
+\begin{question}[Διπλός εγκλεισμός]
+Για $A,B\subseteq Q$ δείξτε ότι $A\setminus B = A\cap(Q\setminus B)$.
+\end{question}
+
+
+\begin{question}[Νόμος De Morgan]
+Για $A,B\subseteq Q$ αποδείξτε ότι
+$Q\setminus(A\cup B)=(Q\setminus A)\cap(Q\setminus B)$.
+\end{question}
+
+
+\begin{question}[Δυναμοσύνολα]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Γράψτε όλα τα στοιχεία του $\Pow(\{a,b,c\})$. Πόσα είναι;
+\gi{β} Υπολογίστε τα $\Pow(\emptyset)$ και $\Pow(\Pow(\emptyset))$.
+\gi{γ} Πόσα στοιχεία έχει το $\Pow(\Pow(\{p\}))$;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[\st]
+Δείξτε ότι $S\subseteq T \iff \Pow(S)\subseteq\Pow(T)$.
+\end{question}
+
+
+%=================================================================
+\section{Ζεύγη, σχέσεις, συναρτήσεις}
+%=================================================================
+
+\begin{question}[Καρτεσιανό γινόμενο]
+Για $A=\{1,2,3\}$ και $B=\{x,y\}$ γράψτε τα $A\times B$ και $B\times A$. Πόσα στοιχεία
+έχει το καθένα; Είναι ίσα;
+\end{question}
+
+
+\begin{question}[Σχέση ή συνάρτηση;]
+Έστω $A=\{1,2,3\}$ και $B=\{x,y\}$. Ποιες από τις παρακάτω σχέσεις είναι συναρτήσεις $A\to B$;
+\begin{enumerate}[itemsep=0pt]
+\gi{α} $\{(1,x),(2,x),(3,y)\}$
+\gi{β} $\{(1,x),(2,y)\}$
+\gi{γ} $\{(1,x),(2,x),(3,x)\}$
+\gi{δ} $\{(1,x),(1,y),(2,x),(3,y)\}$
+\gi{ε} $\emptyset$
+\end{enumerate}
+\st{} Πόσες συναρτήσεις $A\to B$ υπάρχουν; Πόσες σχέσεις $R\subseteq A\times B$;
+\end{question}
+
+
+\begin{question}[Σχέση ως συνάρτηση με τιμές σύνολα]
+Έστω $A=\{1,2,3\}$, $B=\{x,y\}$.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Για $R=\{(1,x),(1,y),(3,y)\}$ υπολογίστε τα $F_R(1),F_R(2),F_R(3)$.
+\gi{β} Αντίστροφα: αν $F(1)=\{y\}$, $F(2)=\{x,y\}$, $F(3)=\emptyset$, ποια είναι η σχέση $R$;
+\gi{γ} Για ποιες σχέσεις $R$ ισχύει $|F_R(a)|=1$ για κάθε $a\in A$;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Εικόνα]
+Βρείτε την εικόνα καθεμιάς από τις παρακάτω συναρτήσεις:
+\begin{enumerate}[itemsep=0pt]
+\gi{α} $f:\N\to\N$, $f(n)=n+3$
+\gi{β} $g:\Z\to\Z$, $g(z)=z^2$
+\gi{γ} $h:\N\to\N$, $h(n)=\lfloor n/2\rfloor$
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Το σύνολο άφιξης έχει σημασία]
+Συμπληρώστε τον πίνακα με Ναι/Όχι και δώστε αντιπαράδειγμα για κάθε «Όχι».
+\begin{center}
+\begin{tabular}{lcc}
+\toprule
+Συνάρτηση & 1-1 & Επί\\
+\midrule
+$f_1:\N\to\N$, $f_1(n)=n+3$ & & \\
+$f_2:\Z\to\Z$, $f_2(z)=z+3$ & & \\
+$f_3:\Z\to\N$, $f_3(z)=z^2$ & & \\
+$f_4:\N\to\N$, $f_4(n)=\lfloor n/2\rfloor$ & & \\
+$f_5:\N\to\N$, $f_5(n)=2n+1$ & & \\
+$f_6:\Z\to\Z$, $f_6(z)=-z$ & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{question}
+
+
+\begin{question}[Απόδειξη 1-1 / επί]
+Θεωρήστε τον τύπο $x\mapsto 3x+7$.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι η $f:\Z\to\Z$, $f(x)=3x+7$, είναι 1-1 αλλά όχι επί.
+\gi{β} Δείξτε ότι η $g:\Q\to\Q$, $g(x)=3x+7$, είναι αμφιμονοσήμαντη και βρείτε την $g^{-1}$.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Αντίστροφη σχέση]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Για $\pi:\{1,2,3\}\to\{1,2,3\}$ με $\pi(1)=2,\pi(2)=3,\pi(3)=1$, γράψτε την $\pi^{-1}$
+ως σύνολο ζευγών και ελέγξτε ότι είναι συνάρτηση.
+\gi{β} Για $h:\Z\to\N$, $h(z)=|z|$, εξηγήστε γιατί η $h^{-1}$ \emph{δεν} είναι συνάρτηση
+$\N\to\Z$.
+\gi{γ} Για $h':\Z\to\Z$, $h'(z)=|z|$, βρείτε έναν \emph{δεύτερο} λόγο για τον οποίο η
+$h'^{-1}$ δεν είναι συνάρτηση $\Z\to\Z$.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[\st{} Σύνθεση]
+Για $f:A\to B$ και $g:B\to C$ ορίζουμε $(g\circ f)(a)=g(f(a))$. Δείξτε ότι:
+\begin{enumerate}[itemsep=0pt]
+\gi{α} αν οι $f,g$ είναι 1-1, τότε και η $g\circ f$ είναι 1-1·
+\gi{β} αν οι $f,g$ είναι επί, τότε και η $g\circ f$ είναι επί.
+\end{enumerate}
+Συμπεράνετε ότι αν $|A|=|B|$ και $|B|=|C|$, τότε $|A|=|C|$.
+\end{question}
+
+
+%=================================================================
+\section{Ισοπληθικότητα, αριθμησιμότητα, dovetailing}
+%=================================================================
+
+\begin{question}[Ξενοδοχείο του Hilbert]
+Δώστε αμφιμονοσήμαντες συναρτήσεις
+(α) $\N\to\{1,2,3,\dots\}$,\;
+(β) $\N\to\{10,11,12,\dots\}$,\;
+(γ) $\N\to\{0,3,6,9,\dots\}$.
+Αποδείξτε το (α) πλήρως. Τι λέει το (α) για ένα άπειρο σύνολο και ένα γνήσιο υποσύνολό του;
+\end{question}
+
+
+\begin{question}[Η άσκηση των διαφανειών: οι ακέραιοι]\leavevmode\par
+Η απαρίθμηση $0,1,-1,2,-2,3,-3,\dots$ ορίζει μια συνάρτηση
+$e:\N\to\Z$.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Υπολογίστε τα $e(0),\dots,e(6)$.
+\gi{β} Δώστε κλειστό τύπο για την $e$ (με περιπτώσεις).
+\gi{γ} Δώστε την αντίστροφη $e^{-1}:\Z\to\N$ και ελέγξτε ότι $e^{-1}(e(n))=n$.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Dovetailing με και χωρίς επικάλυψη]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Για $A=\{3n:n\in\N\}$ και $B=\{3n+1:n\in\N\}$ γράψτε τους πρώτους 8 όρους της
+$a_0,b_0,a_1,b_1,\dots$.
+\gi{β} Για $A=\{2n\}$ και $B=\{3n\}$ (τα σύνολα \emph{δεν} είναι ξένα) γράψτε τους πρώτους 8
+όρους μετά την παράλειψη επαναλήψεων.
+\gi{γ} Γιατί η παράλειψη επαναλήψεων δεν «χάνει» κανένα στοιχείο;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Κωδικοποίηση ζευγών]
+Με $\pi(i,j)=T_{i+j}+j$, όπου $T_s=\frac{s(s+1)}{2}$, υπολογίστε τα
+$\pi(0,0)$, $\pi(1,1)$, $\pi(3,0)$, $\pi(0,3)$, $\pi(2,2)$ και $\pi(4,3)$.
+Για καθένα γράψτε ρητά «διαγώνιος, αρχή, μετατόπιση».
+\end{question}
+
+
+\begin{question}[Αποκωδικοποίηση (φροντιστήριο)]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Σε ποια διαγώνιο βρίσκεται το $n=5$; Ποιο ζεύγος είναι το $\pi^{-1}(5)$;
+\gi{β} Βρείτε με τον ίδιο τρόπο τα $\pi^{-1}(11)$, $\pi^{-1}(20)$, $\pi^{-1}(31)$.
+\gi{γ} Περιγράψτε τη γενική διαδικασία: δεδομένου $n$, βρείτε $s$, μετά $j$, μετά $i$.
+\gi{δ} \st{} Δείξτε ότι $s=\left\lfloor \frac{\sqrt{8n+1}-1}{2}\right\rfloor$.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[\st{} Τριάδες]
+Δείξτε ότι $|\N\times\N\times\N|=|\N|$, χρησιμοποιώντας τη $\pi$ δύο φορές.
+\end{question}
+
+
+%=================================================================
+\section{Γραφήματα, ιδιότητες σχέσεων, κλειστότητες}
+%=================================================================
+
+Σε όλη την ενότητα χρησιμοποιούμε το γράφημα των διαφανειών:
+$V=\{a,b,c,d,e\}$ και $R=\{(a,b),(b,c),(c,b),(c,d)\}$.
+\begin{center}
+\begin{tikzpicture}[node distance=1.6cm,
+  v/.style={circle,draw,minimum size=6mm,inner sep=0pt},
+  >={Stealth[length=2.2mm]}]
+\node[v] (a) {$a$};
+\node[v,right=of a] (b) {$b$};
+\node[v,right=of b] (c) {$c$};
+\node[v,right=of c] (d) {$d$};
+\node[v,right=of d] (e) {$e$};
+\draw[->] (a) -- (b);
+\draw[->] (b) to[bend left=25] (c);
+\draw[->] (c) to[bend left=25] (b);
+\draw[->] (c) -- (d);
+\end{tikzpicture}
+\end{center}
+
+\begin{question}[Διαδρομές]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Είναι η $a,c,d$ διαδρομή; Είναι η $a,b,c,b,c,d$; Τι μήκος έχει;
+\gi{β} Βρείτε διαδρομή μήκους ακριβώς 4 από το $a$ στο $c$.
+\gi{γ} Υπάρχει διαδρομή μήκους ακριβώς 2 από το $a$ στο $d$; Μήκους 3;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Ιδιότητες σχέσεων]
+Για κάθε σχέση αποφασίστε αν είναι ανακλαστική, συμμετρική και μεταβατική.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Στο $\{1,2,3\}$: $R_1=\{(1,1),(2,2),(3,3),(1,2)\}$.
+\gi{β} Στο $\{1,2,3\}$: $R_2=\{(1,2),(2,1)\}$.
+\gi{γ} Στο $\{1,2,3\}$: $R_3=\emptyset$.
+\gi{δ} Στο $\N$: $x\le y$.
+\gi{ε} Στο $\Z$: $x\sim y \iff x-y$ άρτιος. Αποδείξτε ότι είναι σχέση ισοδυναμίας.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Δυνάμεις μιας σχέσης]
+Για το $R$ του γραφήματος υπολογίστε τα $R^2$, $R^3$, $R^+$ και $R^*$.
+Ισχύει $(a,a)\in R^+$; $(b,b)\in R^+$; Εξηγήστε τη διαφορά.
+\end{question}
+
+
+\begin{question}[\st{} Η $R^+$ είναι μεταβατική]
+Χρησιμοποιώντας την ερμηνεία «$(u,v)\in R^k$ σημαίνει διαδρομή μήκους ακριβώς $k$», δείξτε ότι η
+$R^+$ είναι μεταβατική.
+\end{question}
+
+
+\begin{question}[Διάδοχοι και κλειστά σύνολα]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Υπολογίστε τα $\Post(\{a\})$, $\Post(\{b,c\})$ και $\Post(\{d,e\})$.
+\gi{β} Ποια από τα $\emptyset,\ \{a\},\ \{d\},\ \{e\},\ \{b,c\},\ \{b,c,d\},\ V$ είναι $R$-κλειστά;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Υπολογισμός κλειστότητας]
+Με την επανάληψη $S_0=S$, $S_{i+1}=S_i\cup\Post(S_i)$ υπολογίστε τα
+$\cl(\{c\})$, $\cl(\{e\})$ και $\cl(\{a,e\})$, δείχνοντας τον πίνακα των γύρων.
+\end{question}
+
+
+\begin{question}[\st{} Ιδιότητες κλειστότητας από τον ορισμό]
+Χρησιμοποιώντας \emph{μόνο} τον χαρακτηρισμό «$\cl(S)$ είναι το μικρότερο $R$-κλειστό σύνολο που
+περιέχει το $S$» (ιδιότητες 1–3 της διαφάνειας 31), δείξτε:
+\begin{enumerate}[itemsep=0pt]
+\gi{α} μονοτονία: $S\subseteq T\Rightarrow \cl(S)\subseteq\cl(T)$·
+\gi{β} ιδιοδυναμία: $\cl(\cl(S))=\cl(S)$·
+\gi{γ} αν τα $C_1,C_2$ είναι $R$-κλειστά, τότε και το $C_1\cap C_2$ είναι $R$-κλειστό.
+\end{enumerate}
+\end{question}
+
+
+%=================================================================
+\section{Συνεπαγωγή, αντιθετοαντιστροφή, ποσοδείκτες}
+%=================================================================
+
+\begin{question}[Πίνακες αλήθειας]
+Κατασκευάστε τον πίνακα αλήθειας των $P\to Q$, $Q\to P$ και $\neg P\vee Q$.
+Ποιες από αυτές είναι λογικά ισοδύναμες;
+\end{question}
+
+
+\begin{question}[Αντίστροφη και αντιθετοαντίστροφη]
+Για κάθε πρόταση γράψτε την αντίστροφη και την αντιθετοαντίστροφη, και αποφασίστε ποιες
+είναι αληθείς.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Για $n\in\Z$: αν $6\mid n$, τότε $3\mid n$.
+\gi{β} Για σύνολα $A,B$: αν $A\subseteq B$, τότε $A\cap B=A$.
+\gi{γ} Για $f:\N\to\N$: αν η $f$ είναι αμφιμονοσήμαντη, τότε είναι 1-1.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Κενή αλήθεια]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Είναι αληθής η πρόταση «κάθε στοιχείο του $\emptyset$ είναι άρτιος αριθμός»; Και η
+«κάθε στοιχείο του $\emptyset$ είναι περιττός αριθμός»;
+\gi{β} Γράψτε την πρώτη στη μορφή $\forall x\,(x\in\emptyset\to P(x))$ και εξηγήστε με τον πίνακα αλήθειας.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Άρνηση]
+Γράψτε την άρνηση καθεμιάς πρότασης μεταφέροντας το $\neg$ «προς τα μέσα», και αποφασίστε ποια
+από τις δύο (πρόταση ή άρνηση) είναι αληθής.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} $\exists n\in\N:\ n^2=2$
+\gi{β} $\forall x\in\Z\ \exists y\in\Z:\ x+y=0$
+\gi{γ} $\forall x\in\N\ \exists y\in\N:\ x+y=0$
+\gi{δ} «Η $f:A\to B$ είναι 1-1» και «η $f:A\to B$ είναι επί» (ως τύποι με ποσοδείκτες).
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Σειρά ποσοδεικτών]
+Στο $\Z$, ποιες προτάσεις είναι αληθείς; Για κάθε αληθή δώστε μάρτυρα και για κάθε ψευδή
+δώστε αντιπαράδειγμα στην άρνησή της.
+\[
+\text{(α)}\ \forall x\,\exists y:\ y<x \qquad
+\text{(β)}\ \exists y\,\forall x:\ y<x \qquad
+\text{(γ)}\ \exists y\,\forall x:\ x+y=x
+\]
+Τι αλλάζει στην (α) αν αντικαταστήσουμε το $\Z$ με το $\N$;
+\end{question}
+
+
+\begin{question}[Η δομή «για κάθε υποψήφιο, ένα αντιπαράδειγμα»]
+Μια $f:\N\to\N$ λέγεται \emph{φραγμένη} αν $\exists M\in\N\ \forall n\in\N:\ f(n)\le M$.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Γράψτε τον ορισμό του «μη φραγμένη» με ποσοδείκτες.
+\gi{β} Αποδείξτε ότι η $f(n)=n$ είναι μη φραγμένη.
+\gi{γ} Συγκρίνετε τη δομή με τη διαφάνεια της μη υπολογισιμότητας: ποιο παίζει τον ρόλο του
+αλγορίθμου $P$ και ποιο της εισόδου $D$;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Όριο ακολουθίας]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι $\frac{1}{n+1}\to0$: για δοσμένο $\varepsilon>0$ βρείτε ρητά ένα $N$.
+\gi{β} Δείξτε ότι $\frac{n}{n+1}\to1$. (Υπόδειξη: υπολογίστε το $|a_n-1|$.)
+\gi{γ} \st{} Δείξτε ότι η $a_n=(-1)^n$ δεν συγκλίνει. Ξεκινήστε γράφοντας την άρνηση του ορισμού.
+\end{enumerate}
+\end{question}
+
+
+%=================================================================
+\section{Τεχνικές απόδειξης}
+%=================================================================
+
+\begin{question}[Ευθεία απόδειξη]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι το γινόμενο δύο περιττών ακεραίων είναι περιττός.
+\gi{β} Δείξτε ότι αν ο $x$ είναι περιττός, τότε ο $x^2+3x+5$ είναι περιττός.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Αντιθετοαντιστροφή]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Για $x\in\Z$: αν ο $5x-7$ είναι άρτιος, τότε ο $x$ είναι περιττός.
+\gi{β} Για $a,b\in\R$: αν $a+b\ge20$, τότε $a\ge10$ ή $b\ge10$.
+\end{enumerate}
+Γράψτε πρώτα ρητά την αντιθετοαντίστροφη και μετά αποδείξτε την.
+\end{question}
+
+
+\begin{question}[Περιπτώσεις]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι για κάθε $n\in\Z$ ο $n^2+n$ είναι άρτιος.
+\gi{β} Δείξτε ότι για κάθε $a,b\in\R$: $\max(a,b)+\min(a,b)=a+b$.
+\gi{γ} \st{} Δείξτε ότι αν ο $n$ είναι περιττός, τότε $8\mid n^2-1$.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Απόδειξη με αντίφαση]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι δεν υπάρχει μικρότερος θετικός ρητός αριθμός.
+\gi{β} Δείξτε ότι ο $\sqrt2$ είναι άρρητος. Μπορείτε να χρησιμοποιήσετε το
+«αν ο $n^2$ είναι άρτιος, τότε ο $n$ είναι άρτιος» από τις διαφάνειες.
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Κατασκευαστική απόδειξη]
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Δείξτε ότι υπάρχει $n\in\N$ τέτοιο ώστε ο $n^2+n+41$ να \emph{μην} είναι πρώτος.
+(Υπόδειξη: δοκιμάστε ένα $n$ που κάνει τον $41$ να εμφανίζεται ως κοινός παράγοντας. Αν θέλετε γράψτε ένα προγραμματάκι Python εναλλακτικά. )
+\gi{β} Γέφυρα με χρόνους $1,2,5,8$: δείξτε ότι όλοι μπορούν να περάσουν σε $15$ λεπτά.
+\gi{γ} \st{} Γέφυρα με χρόνους $1,20,21,22$: υπολογίστε τον χρόνο της στρατηγικής
+«ο 1 συνοδεύει όλους» και της στρατηγικής των διαφανειών (οι δύο αργοί μαζί). Ποια είναι
+καλύτερη εδώ; Τι μας διδάσκει αυτό για το τι αποδεικνύει μια κατασκευή;
+\end{enumerate}
+\end{question}
+
+
+\end{document}
