@@ -5,7 +5,7 @@
 **Τμήμα Επιστήμης Υπολογιστών · Φθινοπωρινό εξάμηνο 2026**  
 **Διδάσκων:** [Χαράλαμπος Ε. Τσουρακάκης](https://tsourakakis.com/)
 
-[**Ιστοσελίδα μαθήματος**][course] · [**Περίγραμμα μαθήματος**][syllabus] · [**Υλικό διαλέξεων**](#υλικό-διαλέξεων) · [**Πηγές για το Lean**](#lean-και-τυπικές-αποδείξεις)
+[**Ιστοσελίδα μαθήματος**][course] · [**Περίγραμμα μαθήματος**][syllabus] · [**Υλικό διαλέξεων**](#υλικό-διαλέξεων) · [**Project**](#προαιρετικό-project-bonus) · [**Πηγές για το Lean**](#lean-και-τυπικές-αποδείξεις)
 
 ---
 
@@ -86,6 +86,12 @@
 
 Οι συμπληρωματικές πηγές πλαισιώνουν το υλικό που ανατίθεται προς μελέτη. Μια προσομοίωση μπορεί να βοηθήσει στον έλεγχο μιας ιδέας· μια απόδειξη τεκμηριώνει γιατί είναι σωστή.
 
+## Προαιρετικό project (bonus)
+
+Στον φάκελο [`project/`](project/) βρίσκεται το προαιρετικό project του μαθήματος για **συμπίεση DFA και τυπική επαλήθευση**, με έμπνευση από την εργασία των Kumar et al. για τα D²FA στον έλεγχο πακέτων (deep packet inspection). Συνδυάζει πεπερασμένα αυτόματα, υλοποίηση και πειράματα σε Python, και τυπική επαλήθευση σε Lean. Προθεσμία: **18 Δεκεμβρίου 2026**. Υπεύθυνος βοηθός: Noah Wahl. Βαθμολογείται ως bonus έως **+5%**.
+
+Δείτε το [`project/README.md`](project/README.md) για την πλήρη εκφώνηση, τα αναγνώσματα και τα εργαλεία.
+
 ## Lean και τυπικές αποδείξεις
 
 Το Lean χρησιμοποιείται επιλεκτικά για εξάσκηση στην ακριβή διατύπωση προτάσεων και στον αυστηρό συλλογισμό, καθώς και για τη διερεύνηση του τρόπου με τον οποίο οι αποδείξεις μπορούν να ελέγχονται μηχανικά.
@@ -114,7 +120,7 @@
 **Department of Computer Science · Fall 2026**  
 **Instructor:** [Charalampos E. Tsourakakis](https://tsourakakis.com/)
 
-[**Course website**][course] · [**Syllabus**][syllabus] · [**Lecture materials**](#lecture-materials) · [**Lean resources**](#lean-and-formal-proof)
+[**Course website**][course] · [**Syllabus**][syllabus] · [**Lecture materials**](#lecture-materials) · [**Project**](#optional-bonus-project) · [**Lean resources**](#lean-and-formal-proof)
 
 ---
 
@@ -194,6 +200,12 @@ Discussion and collaboration are encouraged, with explicit acknowledgment of ass
 | [JFLAP](https://www.jflap.org/) | Experimenting with automata, grammars, and Turing machines |
 
 Supplementary resources complement the assigned material. A simulation can help test an idea; a proof establishes why it is correct.
+
+## Optional bonus project
+
+The [`project/`](project/) folder contains the optional course project on **DFA compression and formal verification**, inspired by the work of Kumar et al. on D²FAs for deep packet inspection. It combines finite automata, Python implementation and experiments, and formal verification in Lean. Deadline: **18 December 2026**. Responsible TA: Noah Wahl. Worth up to a **+5%** bonus.
+
+See [`project/README.md`](project/README.md) for the full description, readings, and tooling.
 
 ## Lean and formal proof
 
