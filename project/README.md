@@ -1,5 +1,6 @@
 # CS280 Bonus Project: DFA Compression and Formal Verification
-## Professor C.E. Tsourakakis
+# Deadline: 18/12/2026
+## Professor C.E. Tsourakakis 
 ## Responsible TA: Noah Wahl
 
 This repository contains the optional **CS280 bonus project** on DFA compression for deep packet inspection, inspired by the work of Kumar et al. on delayed-input deterministic finite automata (D²FA).
@@ -50,12 +51,13 @@ At the networking level:
 - **TCP** provides applications with an ordered, reliable stream of bytes.
 - A byte can take one of 256 possible values, so we model the alphabet as
 
-$\Sigma = \{0,1,\ldots,255\}.$
+$$
+\Sigma = \{0,1,\ldots,255\}.
+$$
 
 A complete DFA transition table therefore contains $256|Q|$ entries for a DFA with $|Q|$ states.
 
-If each destination state is stored using 4 bytes, the transition table alone requires approximately $
-256|Q|\cdot 4$ bytes.
+If each destination state is stored using 4 bytes, the transition table alone requires approximately $256|Q|\cdot 4$ bytes.
 
 For large automata produced from many regular expressions, this can become a significant memory bottleneck.
 
@@ -200,7 +202,7 @@ Your implementation should construct a compressed representation consisting of:
 - the original start state,
 - the original accepting states.
 
-The compressed automaton must support a deterministic lookup operation $\operatorname{lookup}(q,a).$
+The compressed automaton must support a deterministic lookup operation $\mathrm{lookup}(q,a)$.
 If an explicit transition on `a` exists at state `q`, use it. 
 Otherwise, follow the default link and continue searching **without consuming `a`**.
 
@@ -223,10 +225,11 @@ At minimum, your tests should cover:
 
 A particularly important test is
 
-$\forall q \in Q,\ \forall a \in \Sigma,
+$$
+\forall q \in Q,\ \forall a \in \Sigma,
 \qquad
-\operatorname{lookup}_C(q,a)=\delta_M(q,a).
-$
+\mathrm{lookup}_C(q,a)=\delta_M(q,a).
+$$
 
 Because the alphabet contains 256 bytes, this requires only
 $256|Q|$ local checks per automaton. You should also test the two implementations on many generated input strings.
@@ -248,11 +251,11 @@ The intended proof has two levels.
 
 Prove that for every state and every input symbol,
 
-$
+$$
 \forall q\in Q,\ \forall a\in\Sigma,
 \qquad
-\operatorname{lookup}_C(q,a)=\delta_M(q,a).
-$
+\mathrm{lookup}_C(q,a)=\delta_M(q,a).
+$$
 
 This is a finite property.
 
@@ -260,21 +263,23 @@ This is a finite property.
 
 Use induction on the input word to prove
 
-$
+$$
 \forall q\in Q,\ \forall w\in\Sigma^*,
 \qquad
-\operatorname{run}_C(q,w)=M.\operatorname{evalFrom}(q,w).
-$
+\mathrm{run}_C(q,w)=M.\mathrm{evalFrom}(q,w).
+$$
 
 From the common start state and accepting states, conclude that both automata accept exactly the same language.
 
-The key idea is $\boxed{
+The key idea is:
+
+$$
 \underbrace{\forall q,a}_{\text{finite local verification}}
-+
+\quad + \quad
 \underbrace{\text{induction on }w}_{\text{generic proof}}
-\Longrightarrow
-\underbrace{\forall q,w}_{\text{all possible inputs}}
-}$
+\quad \Longrightarrow \quad
+\underbrace{\forall q,w}_{\text{all possible inputs}}.
+$$
 
 A Lean starter file may be provided in `lean/`.
 
@@ -294,19 +299,21 @@ Evaluate your implementation on the supplied DFA instances. For every instance, 
 - matching time of the original DFA,
 - matching time of the compressed DFA.
 
-A useful compression metric is
-$\text{compression ratio} = \frac{
-\#\text{explicit transitions}+\#\text{default links}
-}{
-256|Q|
-}.$
+A useful compression metric is:
 
-The central tradeoff to investigate is $
-\boxed{
-\text{less memory}
-\quad\text{vs.}\quad
-\text{more lookup work}
-}$
+$$
+\text{compression ratio} = \frac{
+N_{\mathrm{explicit}} + N_{\mathrm{default}}
+}{256|Q|}.
+$$
+
+Here $N_{\mathrm{explicit}}$ is the number of explicit transitions and $N_{\mathrm{default}}$ is the number of default links.
+
+The central tradeoff to investigate is:
+
+$$
+\boxed{\text{less memory} \quad \text{vs.} \quad \text{more lookup work}}
+$$
 
 Your report should include plots illustrating this tradeoff.
 
