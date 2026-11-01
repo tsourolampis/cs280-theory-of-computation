@@ -1,0 +1,60 @@
+{
+  "suite": "cs280-d2fa-2026",
+  "format": "cs280-dfa-v1",
+  "alphabet_size": 256,
+  "reachability_symbol": 0,
+  "accept_probability": 0.10,
+  "recommended_diameter_bounds": [2, 4, 6, 8],
+  "instances": [
+    {
+      "name": "debug_planted_n16",
+      "family": "planted_similarity",
+      "num_states": 16,
+      "seed": 28001,
+      "cluster_size": 4,
+      "mutation_rate": 0.05
+    },
+    {
+      "name": "uniform_n64",
+      "family": "uniform",
+      "num_states": 64,
+      "seed": 28011
+    },
+    {
+      "name": "uniform_n128",
+      "family": "uniform",
+      "num_states": 128,
+      "seed": 28012
+    },
+    {
+      "name": "uniform_n256",
+      "family": "uniform",
+      "num_states": 256,
+      "seed": 28013
+    },
+    {
+      "name": "planted_n64",
+      "family": "planted_similarity",
+      "num_states": 64,
+      "seed": 28111,
+      "cluster_size": 8,
+      "mutation_rate": 0.05
+    },
+    {
+      "name": "planted_n128",
+      "family": "planted_similarity",
+      "num_states": 128,
+      "seed": 28112,
+      "cluster_size": 8,
+      "mutation_rate": 0.08
+    },
+    {
+      "name": "planted_n256",
+      "family": "planted_similarity",
+      "num_states": 256,
+      "seed": 28113,
+      "cluster_size": 16,
+      "mutation_rate": 0.10
+    }
+  ]
+}
