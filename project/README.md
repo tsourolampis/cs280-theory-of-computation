@@ -50,31 +50,16 @@ At the networking level:
 - **TCP** provides applications with an ordered, reliable stream of bytes.
 - A byte can take one of 256 possible values, so we model the alphabet as
 
-\[
-\Sigma = \{0,1,\ldots,255\}.
-\]
+$\Sigma = \{0,1,\ldots,255\}.$
 
-A complete DFA transition table therefore contains
+A complete DFA transition table therefore contains $256|Q|$ entries for a DFA with $|Q|$ states.
 
-\[
-256|Q|
-\]
-
-entries for a DFA with \(|Q|\) states.
-
-If each destination state is stored using 4 bytes, the transition table alone requires approximately
-
-\[
-256|Q|\cdot 4
-\]
-
-bytes.
+If each destination state is stored using 4 bytes, the transition table alone requires approximately $
+256|Q|\cdot 4$ bytes.
 
 For large automata produced from many regular expressions, this can become a significant memory bottleneck.
 
-Kumar et al. exploit the fact that many DFA states have very similar transition rows. Instead of storing every transition explicitly, one state can reuse transitions from another state through a **default link**, while storing only the transitions that differ.
-
-The resulting representation is a **D²FA**.
+Kumar et al. exploit the fact that many DFA states have very similar transition rows. Instead of storing every transition explicitly, one state can reuse transitions from another state through a **default link**, while storing only the transitions that differ. The resulting representation is a **D²FA**.
 
 ---
 
@@ -201,19 +186,13 @@ Write Python code that:
 - reports whether the input is accepted.
 
 Your baseline implementation should correspond directly to the standard DFA transition function
-
-\[
-\delta : Q \times \Sigma \rightarrow Q.
-\]
-
-This implementation is the reference implementation for testing the compressed automaton.
+$\delta : Q \times \Sigma \rightarrow Q.$ This implementation is the reference implementation for testing the compressed automaton.
 
 ---
 
 ## 6. Task B — Implement Kumar's compression algorithm
 
 Read the relevant sections of the Kumar et al. paper and implement the DFA compression algorithm in Python.
-
 Your implementation should construct a compressed representation consisting of:
 
 - explicit transitions,
@@ -221,14 +200,8 @@ Your implementation should construct a compressed representation consisting of:
 - the original start state,
 - the original accepting states.
 
-The compressed automaton must support a deterministic lookup operation
-
-\[
-\operatorname{lookup}(q,a).
-\]
-
-If an explicit transition on `a` exists at state `q`, use it.
-
+The compressed automaton must support a deterministic lookup operation $\operatorname{lookup}(q,a).$
+If an explicit transition on `a` exists at state `q`, use it. 
 Otherwise, follow the default link and continue searching **without consuming `a`**.
 
 ---
@@ -250,21 +223,13 @@ At minimum, your tests should cover:
 
 A particularly important test is
 
-\[
-\forall q \in Q,\ \forall a \in \Sigma,
+$\forall q \in Q,\ \forall a \in \Sigma,
 \qquad
 \operatorname{lookup}_C(q,a)=\delta_M(q,a).
-\]
+$
 
 Because the alphabet contains 256 bytes, this requires only
-
-\[
-256|Q|
-\]
-
-local checks per automaton.
-
-You should also test the two implementations on many generated input strings.
+$256|Q|$ local checks per automaton. You should also test the two implementations on many generated input strings.
 
 However:
 
@@ -276,19 +241,18 @@ Even millions of successful test cases do not establish equivalence for every po
 
 ## 8. Task D — Formal verification in Lean
 
-For every original DFA \(M\) and compressed automaton \(C\), formally prove that they are equivalent.
-
+For every original DFA $M$ and compressed automaton $C$, formally prove that they are equivalent.
 The intended proof has two levels.
 
 ### Step 1: one-symbol equivalence
 
 Prove that for every state and every input symbol,
 
-\[
+$
 \forall q\in Q,\ \forall a\in\Sigma,
 \qquad
 \operatorname{lookup}_C(q,a)=\delta_M(q,a).
-\]
+$
 
 This is a finite property.
 
@@ -296,25 +260,21 @@ This is a finite property.
 
 Use induction on the input word to prove
 
-\[
+$
 \forall q\in Q,\ \forall w\in\Sigma^*,
 \qquad
 \operatorname{run}_C(q,w)=M.\operatorname{evalFrom}(q,w).
-\]
+$
 
 From the common start state and accepting states, conclude that both automata accept exactly the same language.
 
-The key idea is
-
-\[
-\boxed{
+The key idea is $\boxed{
 \underbrace{\forall q,a}_{\text{finite local verification}}
 +
 \underbrace{\text{induction on }w}_{\text{generic proof}}
 \Longrightarrow
 \underbrace{\forall q,w}_{\text{all possible inputs}}
-}
-\]
+}$
 
 A Lean starter file may be provided in `lean/`.
 
@@ -322,12 +282,10 @@ A Lean starter file may be provided in `lean/`.
 
 ## 9. Task E — Experimental evaluation
 
-Evaluate your implementation on the supplied DFA instances.
+Evaluate your implementation on the supplied DFA instances. For every instance, report at least:
 
-For every instance, report at least:
-
-- number of states \(|Q|\),
-- original number of transition entries \(256|Q|\),
+- number of states $|Q|$,
+- original number of transition entries $256|Q|$,
 - number of explicit transitions after compression,
 - number of default links,
 - compression ratio,
@@ -337,26 +295,18 @@ For every instance, report at least:
 - matching time of the compressed DFA.
 
 A useful compression metric is
-
-\[
-\text{compression ratio}
-=
-\frac{
+$\text{compression ratio} = \frac{
 \#\text{explicit transitions}+\#\text{default links}
 }{
 256|Q|
-}.
-\]
+}.$
 
-The central tradeoff to investigate is
-
-\[
+The central tradeoff to investigate is $
 \boxed{
 \text{less memory}
 \quad\text{vs.}\quad
 \text{more lookup work}
-}
-\]
+}$
 
 Your report should include plots illustrating this tradeoff.
 
@@ -366,6 +316,8 @@ Possible plots include:
 - average default hops vs. maximum default depth,
 - original vs. compressed transition count,
 - matching time vs. compression ratio.
+
+You may come with your own ideas beyond these suggestions. However the trade-off is necessary to show. 
 
 ---
 
@@ -417,7 +369,7 @@ Include:
 
 ### Report
 
-Submit a short report, approximately **4–6 pages**, describing:
+Submit a short report, approximately **8 pages** using the Neurips template that you can find [here](https://www.overleaf.com/latex/templates/formatting-instructions-for-neurips-2026/bjdwqfdkyftc), describing:
 
 1. the compression algorithm,
 2. your implementation,
