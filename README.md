@@ -40,13 +40,21 @@
 
 ## Υλικό διαλέξεων
 
-Η ιστοσελίδα του μαθήματος διατηρεί το πλήρες αρχείο ανά διάλεξη, μαζί με τα υποχρεωτικά αναγνώσματα και το προαιρετικό υλικό εμβάθυνσης. Οι παρακάτω σύνδεσμοι καλύπτουν τις τρεις πρώτες διαλέξεις που είχαν αναρτηθεί έως τις **28 Σεπτεμβρίου 2026**.
+Η ιστοσελίδα του μαθήματος διατηρεί το πλήρες αρχείο ανά διάλεξη, μαζί με τα υποχρεωτικά αναγνώσματα και το προαιρετικό υλικό εμβάθυνσης. Οι παρακάτω σύνδεσμοι καλύπτουν τις διαλέξεις που είχαν αναρτηθεί έως τις **26 Οκτωβρίου 2026** (διαλέξεις 1–11). Οι διαλέξεις 6 και 7 μοιράζονται τις ίδιες διαφάνειες, ενώ οι ασκήσεις των διαλέξεων 7–8 και 11–12 δίνονται σε κοινά αρχεία.
 
 | Διάλεξη | Διαφάνειες | Ασκήσεις |
 |---|---|---|
-| 1 · 21 Σεπτεμβρίου 2026 | [Διαφάνειες · PPTX](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec1_cs280_uoc.pptx) | [Σειρά ασκήσεων 1 · PDF](http://csd.uoc.gr/~hy280/hws_tsourakakis/lec1_exercises.pdf) |
-| 2 · 23 Σεπτεμβρίου 2026 | [Διαφάνειες · PDF](https://csd.uoc.gr/~hy280/lectures_tsourakakis/lec2_diagonalization_cs280.pdf) | [Σειρά ασκήσεων 2 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec2_exercises.pdf) |
-| 3 · 28 Σεπτεμβρίου 2026 | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec3_basic_toolbox_part1_cs280.pdf) | [Σειρά ασκήσεων 3 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec3_exercises.pdf) |
+| 1 · 21 Σεπτεμβρίου 2026 · Πρόβλημα τερματισμού, παράδοξο του Russell | [Διαφάνειες · PPTX](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec1_cs280_uoc.pptx) | [Σειρά ασκήσεων 1 · PDF](http://csd.uoc.gr/~hy280/hws_tsourakakis/lec1_exercises.pdf) |
+| 2 · 23 Σεπτεμβρίου 2026 · Διαγωνιοποίηση | [Διαφάνειες · PDF](https://csd.uoc.gr/~hy280/lectures_tsourakakis/lec2_diagonalization_cs280.pdf) | [Σειρά ασκήσεων 2 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec2_exercises.pdf) |
+| 3 · 28 Σεπτεμβρίου 2026 · Βασικά εργαλεία, μέρος 1 | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec3_basic_toolbox_part1_cs280.pdf) | [Σειρά ασκήσεων 3 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec3_exercises.pdf) |
+| 4 · 30 Σεπτεμβρίου 2026 · Βασικά εργαλεία, μέρος 2 | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec4_basic_toolbox_part2_cs280.pdf) | [Σειρά ασκήσεων 4 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec4_exercises.pdf) |
+| 5 · 5 Οκτωβρίου 2026 · Συμβολοσειρές | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec5_strings_cs280.pdf) | [Σειρά ασκήσεων 5 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec5_exercises.pdf) |
+| 6 · 7 Οκτωβρίου 2026 · Γλώσσες | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec6_languages_cs280.pdf) | [Σειρά ασκήσεων 6 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec6_exercises.pdf) |
+| 7 · 12 Οκτωβρίου 2026 · Γλώσσες (συνέχεια) | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec6_languages_cs280.pdf) | [Σειρά ασκήσεων 6 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec6_exercises.pdf) |
+| 8 · 15 Οκτωβρίου 2026 · Πεπερασμένα αυτόματα, μέρος Ι | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec8_finite_automata_partI_cs280.pdf) | [Σειρά ασκήσεων 7–8 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lecs_7_8_exercises.pdf) |
+| 9 · 19 Οκτωβρίου 2026 · Πεπερασμένα αυτόματα, μέρος ΙΙ | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec9_finite_automata_partII_cs280.pdf) | — |
+| 10 · 21 Οκτωβρίου 2026 · Συζήτηση για την πρόοδο και ασκήσεις | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec10_proodos.pdf) | — |
+| 11 · 26 Οκτωβρίου 2026 · Πεπερασμένα αυτόματα, μέρος ΙΙΙ (λήμμα άντλησης) | [Διαφάνειες · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec11_finite_automata_partIII_cs280.pdf) | [Σειρά ασκήσεων 11–12 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec11_12_exercises.pdf) |
 
 **[Συνεχίστε στην ιστοσελίδα του μαθήματος για τις επόμενες διαλέξεις και τα αναγνώσματα →][course]**
 
@@ -141,13 +149,21 @@ All times are local to Crete. Consult the course website and eLearn announcement
 
 ## Lecture materials
 
-The course website maintains the full lecture-by-lecture record, including required readings and optional enrichment. The links below cover the first three lectures posted as of **28 September 2026**.
+The course website maintains the full lecture-by-lecture record, including required readings and optional enrichment. The links below cover the lectures posted as of **26 October 2026** (lectures 1–11). Lectures 6 and 7 share the same slides, while the exercises for lectures 7–8 and 11–12 are distributed in shared files.
 
 | Lecture | Slides | Exercises |
 |---|---|---|
-| 1 · 21 September 2026 | [Slides · PPTX](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec1_cs280_uoc.pptx) | [Problem set 1 · PDF](http://csd.uoc.gr/~hy280/hws_tsourakakis/lec1_exercises.pdf) |
-| 2 · 23 September 2026 | [Slides · PDF](https://csd.uoc.gr/~hy280/lectures_tsourakakis/lec2_diagonalization_cs280.pdf) | [Problem set 2 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec2_exercises.pdf) |
-| 3 · 28 September 2026 | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec3_basic_toolbox_part1_cs280.pdf) | [Problem set 3 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec3_exercises.pdf) |
+| 1 · 21 September 2026 · Halting problem, Russell's paradox | [Slides · PPTX](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec1_cs280_uoc.pptx) | [Problem set 1 · PDF](http://csd.uoc.gr/~hy280/hws_tsourakakis/lec1_exercises.pdf) |
+| 2 · 23 September 2026 · Diagonalization | [Slides · PDF](https://csd.uoc.gr/~hy280/lectures_tsourakakis/lec2_diagonalization_cs280.pdf) | [Problem set 2 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec2_exercises.pdf) |
+| 3 · 28 September 2026 · Basic toolbox, part 1 | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec3_basic_toolbox_part1_cs280.pdf) | [Problem set 3 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec3_exercises.pdf) |
+| 4 · 30 September 2026 · Basic toolbox, part 2 | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec4_basic_toolbox_part2_cs280.pdf) | [Problem set 4 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec4_exercises.pdf) |
+| 5 · 5 October 2026 · Strings | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec5_strings_cs280.pdf) | [Problem set 5 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec5_exercises.pdf) |
+| 6 · 7 October 2026 · Languages | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec6_languages_cs280.pdf) | [Problem set 6 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec6_exercises.pdf) |
+| 7 · 12 October 2026 · Languages (continued) | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec6_languages_cs280.pdf) | [Problem set 6 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec6_exercises.pdf) |
+| 8 · 15 October 2026 · Finite automata, part I | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec8_finite_automata_partI_cs280.pdf) | [Problem set 7–8 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lecs_7_8_exercises.pdf) |
+| 9 · 19 October 2026 · Finite automata, part II | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec9_finite_automata_partII_cs280.pdf) | — |
+| 10 · 21 October 2026 · Midterm discussion and exercises | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec10_proodos.pdf) | — |
+| 11 · 26 October 2026 · Finite automata, part III (pumping lemma) | [Slides · PDF](https://www.csd.uoc.gr/~hy280/lectures_tsourakakis/lec11_finite_automata_partIII_cs280.pdf) | [Problem set 11–12 · PDF](https://csd.uoc.gr/~hy280/hws_tsourakakis/lec11_12_exercises.pdf) |
 
 **[Continue to the course website for subsequent lectures and readings →][course]**
 
