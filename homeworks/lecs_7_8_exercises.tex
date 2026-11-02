@@ -1,0 +1,311 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\setmainfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\newfontfamily\greekfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+\newcommand{\eps}{\varepsilon}
+\theoremstyle{definition}
+\newtheorem{question}{Άσκηση}
+\setlist[enumerate]{label=(\alph*),leftmargin=*,itemsep=3pt,topsep=5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small ΗΥ280 (2026) - Τσουρακάκης}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\begin{center}
+\horrule{0.4pt}\\[0.15cm]
+{\large\textbf{ΗΥ 280 \textemdash{} Θεωρία Υπολογισμού}}\\[0.1cm]
+{Ασκήσεις 7,8 \textemdash{} Κανονικές Γλώσσες, Κανονικές Εκφράσεις, ε-NFAs, DFAs}\\[0.1cm]
+{Χαράλαμπος Ε. Τσουρακάκης}\\
+\horrule{0.4pt}
+\end{center}
+
+\begin{center}\fbox{\begin{minipage}{0.93\linewidth}
+\textbf{Οδηγίες για τις ασκήσεις}
+\begin{itemize}[leftmargin=*,itemsep=6pt]
+\item \textbf{Ασκήσεις 1-6, 7a, 8:} Αποτελούν μέρος του παραδοτέου. Μόνο το (β) ερώτημα της άσκησης 7 είναι προαιρετικό. 
+\item Κάποιες από τις ασκήσεις θα συζητηθούν εκτενώς στο φροντιστήριο της Παρασκευής, μην το χάσετε! 
+\end{itemize}
+\end{minipage}}\end{center}\medskip
+
+\begin{question}[Βασικές ιδιότητες πράξεων γλωσσών]
+
+Έστω $\Sigma$ ένα πεπερασμένο αλφάβητο
+και $A,B,L\subseteq\Sigma^*$ αυθαίρετες γλώσσες.
+
+Να αποδείξετε τις ακόλουθες ισότητες:
+
+\begin{enumerate}
+
+\item Η συνένωση με την κενή γλώσσα δίνει
+πάντοτε την κενή γλώσσα:
+\[
+    \boxed{
+    \varnothing\cdot L
+    =L\cdot\varnothing
+    =\varnothing.
+    }
+\]
+
+\item Η συνένωση με τη γλώσσα
+που περιέχει μόνο την κενή λέξη
+δεν αλλάζει τη γλώσσα:
+\[
+    \boxed{
+    \{\eps\}\cdot L
+    =L\cdot\{\eps\}
+    =L.
+    }
+\]
+
+\item Για οποιεσδήποτε γλώσσες $A,B$,
+ισχύει:
+\[
+    \boxed{
+    (A\cup B)^*=(A^*\cdot B^*)^*.
+    }
+\]
+
+\textit{Υπόδειξη:}
+Αποδείξτε τις δύο εγκλείσεις.
+Χρησιμοποιήστε το γεγονός ότι
+$\eps\in A^*, B^*$.
+
+\end{enumerate}
+
+\end{question}
+
+\begin{question}[Περιγραφή γλωσσών]
+Για κάθε μία από τις παρακάτω κανονικές εκφράσεις πάνω στο
+$\Sigma=\{0,1\}$, περιγράψτε με λόγια τη γλώσσα που ορίζει.
+\begin{enumerate}
+\item $(0^*1^*)^*0$.
+\item $(01^*)^*0$.
+\item $(00+11+(01+10)(00+11)^*(01+10))^*$.
+\end{enumerate}
+\end{question}
+
+\begin{question}[Απλοποίηση κανονικών εκφράσεων]
+Απλοποιήστε τις ακόλουθες κανονικές εκφράσεις,
+αιτιολογώντας τις απαντήσεις σας.
+\begin{enumerate}
+\item $(00)^*0+(00)^*$.
+\item $(0+1)(\eps+00)^+ +(0+1)$.
+\item $(0+\eps)0^*1$.
+\end{enumerate}
+\end{question}
+
+\begin{question}[Δυαδικές αναπαραστάσεις δυνάμεων του 4]
+Να βρείτε μια κανονική έκφραση για τη γλώσσα των
+δυαδικών αναπαραστάσεων των αριθμών $4^n$, $n\ge 0$,
+χωρίς αρχικά μηδενικά.
+\end{question}
+
+\begin{question}[Κατασκευή κανονικών εκφράσεων]
+Για κάθε μία από τις παρακάτω γλώσσες πάνω στο
+$\Sigma=\{0,1\}$, κατασκευάστε μία κανονική έκφραση.
+\begin{enumerate}
+\item Όλες οι συμβολοσειρές των οποίων το πέμπτο
+σύμβολο από τα δεξιά (δηλαδή διαβάζοντας από τα δεξιά προς τα αριστερά) είναι $0$.
+\item Όλες οι συμβολοσειρές που περιέχουν το $000$
+ή το $111$ ως υποσυμβολοσειρά.
+\item Όλες οι συμβολοσειρές που δεν περιέχουν
+ούτε το $000$ ούτε το $111$ ως υποσυμβολοσειρά.
+\end{enumerate}
+\end{question}
+
+\begin{question}[Ισοδυναμία κανονικών εκφράσεων]
+
+Έστω το αλφάβητο $\Sigma=\{0,1\}$.
+Γνωρίζουμε ότι η κανονική έκφραση
+$(0+1)^*$ 
+περιγράφει το σύνολο $\Sigma^*$ όλων
+των δυαδικών λέξεων.
+Να αποδείξετε ότι καθεμία από τις παρακάτω
+κανονικές εκφράσεις είναι ισοδύναμη
+με την $(0+1)^*$.
+
+\begin{enumerate}
+
+\item
+$ 
+    R_1=\eps+0(0+1)^*+1(1+0)^*.
+$ 
+
+\item
+$R_2=0^*+0^*1(0+1)^*.$
+
+\item
+$ 
+    R_3=((\eps+0)(\eps+1))^*.$
+
+\item
+$ R_4=0^*(10^*)^*.$
+
+\end{enumerate}
+
+\textit{Υπόδειξη:}
+Για κάθε έκφραση $R_i$, αποδείξτε ότι $L(R_i)=\Sigma^*.$
+
+Μπορείτε να χρησιμοποιήσετε τις δύο εγκλείσεις
+\[
+    L(R_i)\subseteq\Sigma^*,
+    \qquad
+    \Sigma^*\subseteq L(R_i).
+\]
+
+Η πρώτη έγκλειση είναι άμεση.
+Για τη δεύτερη, θεωρήστε μία αυθαίρετη
+δυαδική λέξη και βρείτε πώς μπορεί
+να διασπαστεί σύμφωνα με τη δομή
+της αντίστοιχης κανονικής έκφρασης.
+
+\end{question}
+
+\begin{question}[Αντιστροφή λέξεων και κλειστότητα κανονικών γλωσσών]
+
+Έστω $\Sigma$ ένα πεπερασμένο αλφάβητο.
+
+Υπενθυμίζουμε ότι η αντιστροφή $w^R$
+μιας λέξης $w\in\Sigma^*$ ορίζεται
+αναδρομικά ως εξής:
+\[
+w^R=
+\begin{cases}
+\eps,
+    & \text{αν }w=\eps,\\[2mm]
+x^R a,
+    & \text{αν }w=ax,\quad
+      a\in\Sigma,\ x\in\Sigma^*.
+\end{cases}
+\]
+
+Για παράδειγμα,
+\[
+    (00101)^R=10100.
+\]
+
+Για κάθε γλώσσα $L\subseteq\Sigma^*$,
+ορίζουμε την αντίστροφη γλώσσα
+\[
+    L^R=\{w^R\mid w\in L\}.
+\]
+
+\begin{enumerate}
+
+\item Να αποδείξετε ότι, για κάθε γλώσσα
+$L\subseteq\Sigma^*$,
+\[
+    \boxed{(L^*)^R=(L^R)^*.}
+\]
+
+\textit{Υπόδειξη:}
+Χρησιμοποιήστε τον ορισμό
+της επανάληψης Kleene και την ιδιότητα
+\[
+    (xy)^R=y^Rx^R.
+\]
+
+\item Να αποδείξετε ότι, αν η $L$
+είναι κανονική γλώσσα,
+τότε και η $L^R$ είναι κανονική.
+
+\textit{Υπόδειξη:}
+Ξεκινήστε από ένα DFA που αναγνωρίζει
+τη $L$ και κατασκευάστε ένα
+$\eps$-NFA για την $L^R$.
+
+Αντιστρέψτε τη φορά όλων των
+μεταβάσεων και προσέξτε τι πρέπει
+να γίνει με τις αρχικές και
+τις τελικές καταστάσεις.
+
+Μπορείτε να χρησιμοποιήσετε
+το αποτέλεσμα του (α).
+
+\end{enumerate}
+
+Μπορείτε να χρησιμοποιήσετε
+χωρίς απόδειξη τις ακόλουθες ιδιότητες:
+\[
+\begin{aligned}
+L^*L^*&=L^*,\\
+(w^R)^R&=w,\\
+(xy)^R&=y^Rx^R.
+\end{aligned}
+\]
+
+\end{question}
+
+\begin{question}[Κανονικές γλώσσες και διπλασιασμός συμβόλων]
+
+Έστω $\Sigma$ ένα πεπερασμένο αλφάβητο. Ορίζουμε αναδρομικά τη συνάρτηση
+\[
+    \operatorname{stutter}:\Sigma^*\to\Sigma^*
+\]
+ως εξής:
+\[
+\operatorname{stutter}(w)=
+\begin{cases}
+\eps,
+    & \text{αν } w=\eps,\\[2mm]
+aa\cdot\operatorname{stutter}(x),
+    & \text{αν } w=ax,
+      \quad a\in\Sigma,\ x\in\Sigma^*.
+\end{cases}
+\]
+
+Δηλαδή, η συνάρτηση $\operatorname{stutter}$
+αντικαθιστά κάθε σύμβολο μιας λέξης
+με δύο διαδοχικά αντίγραφά του.
+
+Για παράδειγμα, αν $\Sigma=\{0,1\}$, τότε
+\[
+\begin{aligned}
+\operatorname{stutter}(\eps)&=\eps,\\
+\operatorname{stutter}(01)&=0011,\\
+\operatorname{stutter}(101)&=110011.
+\end{aligned}
+\]
+
+Για κάθε γλώσσα $L\subseteq\Sigma^*$,
+ορίζουμε
+\[
+    \operatorname{stutter}(L)
+    =
+    \{\operatorname{stutter}(w)\mid w\in L\}.
+\]
+
+Έστω τώρα $L$ μία αυθαίρετη
+κανονική γλώσσα. Να αποδείξετε ότι η γλώσσα
+$    \operatorname{stutter}(L)$
+είναι επίσης κανονική.
+
+\textit{Υπόδειξη:}
+Εφόσον η $L$ είναι κανονική,
+υπάρχει DFA
+\[
+    M=(Q,\Sigma,\delta,q_0,F)
+\]
+που την αναγνωρίζει.
+
+Κατασκευάστε ένα νέο αυτόματο $M'$ που,
+για κάθε σύμβολο $a$,
+προσομοιώνει μια μετάβαση
+του $M$ διαβάζοντας το ζεύγος $aa$. Αποδείξτε με επαγωγή πως $L(M')=\operatorname{stutter}(L)$.
+\end{question}
+
+\end{document}

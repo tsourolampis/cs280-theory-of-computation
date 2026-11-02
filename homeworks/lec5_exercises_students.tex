@@ -1,0 +1,121 @@
+
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\setmainfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\setmonofont{DejaVu Sans Mono}[Scale=0.88]
+\newfontfamily\greekfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\newfontfamily\greekfonttt{DejaVu Sans Mono}[Scale=0.88]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage[unicode,hidelinks]{hyperref}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+\newcommand{\eps}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{question}{Άσκηση}
+\setlist[enumerate]{label=(\alph*),leftmargin=*,itemsep=3pt,topsep=5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small ΗΥ280 (2026) - Τσουρακάκης}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\DefineVerbatimEnvironment{pseudocode}{Verbatim}{fontsize=\small,xleftmargin=1em}
+
+
+\begin{document}
+\begin{center}
+\horrule{0.4pt}\\[0.15cm]
+{\large\textbf{ΗΥ 280 \textemdash{} Θεωρία Υπολογισμού}}\\[0.1cm]
+{Ασκήσεις 5 \textemdash{} Συμβολοσειρές}\\[0.1cm]
+{Χαράλαμπος Ε. Τσουρακάκης}\\
+\horrule{0.4pt}
+\end{center}
+
+\begin{center}\fbox{\begin{minipage}{0.93\linewidth}
+\textbf{Οδηγίες για τις ασκήσεις}
+\begin{itemize}[leftmargin=*,itemsep=6pt]
+\item \textbf{Ασκήσεις 1-4:} Αποτελούν μέρος του παραδοτέου.
+\item Στην Άσκηση 1, για τις ερωτήσεις Σωστό/Λάθος δεν χρειάζεται να γράψετε αιτιολόγηση. Θα πρέπει, ωστόσο, να γνωρίζετε την αιτιολόγηση της απάντησής σας.
+\item Όπου ζητείται επαγωγή, γράψτε καθαρά βάση, επαγωγική υπόθεση και βήμα.
+\item {\bf Αξιοποιήστε τις ώρες γραφείου} αφού πρώτα προσπαθήσετε τις ασκήσεις.
+\end{itemize}
+\end{minipage}}\end{center}\medskip
+
+\begin{question}[$\bigstar$ Έλεγχος κατανόησης]
+Έστω $\Sigma=\{0,1\}$ και $x,y,z\in\Sigma^*$.
+
+\textbf{Σωστό ή Λάθος.}
+\begin{enumerate}
+\item Αν $|xy|=|xz|$, τότε $y=z$.
+\item Αν $xy=xz$, τότε $y=z$.
+\item Για κάθε $x,y$, $(xy)^R=x^Ry^R$.
+\item Αν $x$ είναι prefix της $y$, τότε $x^R$ είναι suffix της $y^R$.
+\item Αν $xy=yx$, τότε $x=y$.
+\item Αν $xyz=\eps$, τότε $x=y=z=\eps$.
+\end{enumerate}
+\end{question}
+
+\begin{question}[$\bigstar$ Η αναδρομική συνάρτηση \emph{hanoi}]
+Ορίζουμε
+\[
+\operatorname{hanoi}(w)=
+\begin{cases}
+\eps,&w=\eps,\\
+\operatorname{hanoi}(x)\,a\,\operatorname{hanoi}(x),&w=ax.
+\end{cases}
+\]
+\begin{enumerate}
+\item Υπολογίστε $\operatorname{hanoi}(0)$, $\operatorname{hanoi}(01)$ και $\operatorname{hanoi}(010)$.
+\item  Αποδείξτε με επαγωγή ότι
+\[
+|\operatorname{hanoi}(w)|=2^{|w|}-1
+\]
+για κάθε $w$.
+\end{enumerate}
+\end{question}
+
+\begin{question}[$\bigstar\bigstar$ Αναδρομικά ορισμένη γλώσσα]
+Ορίζουμε $L\subseteq\{0,1\}^*$ ως τη μικρότερη γλώσσα που ικανοποιεί:
+\begin{itemize}
+\item $\eps\in L$,
+\item αν $x,y\in L$, τότε $0x1y0\in L$.
+\end{itemize}
+\begin{enumerate}
+\item Δείξτε ότι $010\in L$, $001010\in L$ και $00101010010\in L$.
+\item Αποδείξτε με δομική επαγωγή ότι κάθε $w\in L$ ικανοποιεί
+\[
+\#_0(w)=2\#_1(w).
+\]
+Μπορείτε να χρησιμοποιήσετε $\#_a(xy)=\#_a(x)+\#_a(y)$.
+\item Δώστε συμβολοσειρά με διπλάσια $0$ από $1$ που δεν ανήκει στη $L$.
+\end{enumerate}
+\end{question}
+
+\begin{question}[$\bigstar\bigstar$ Η συνάρτηση καταμέτρησης]
+Για σύμβολο $a\in\Sigma$ και $w\in\Sigma^*$, έστω $\#(a,w)$ το πλήθος εμφανίσεων του $a$ στη $w$.
+\begin{enumerate}
+\item Δώστε αναδρομικό ορισμό της
+\[
+\#:\Sigma\times\Sigma^*\to\mathbb N.
+\]
+\item Αποδείξτε ότι για κάθε $a\in\Sigma$ και $x,y\in\Sigma^*$,
+\[
+\#(a,xy)=\#(a,x)+\#(a,y).
+\]
+\item Αποδείξτε ότι για κάθε $w\in\Sigma^*$,
+\[
+|w|=\sum_{a\in\Sigma}\#(a,w).
+\]
+\end{enumerate}
+\end{question}
+
+\end{document}

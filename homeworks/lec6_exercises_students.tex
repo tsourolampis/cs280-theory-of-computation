@@ -1,0 +1,180 @@
+\documentclass[11pt,a4paper]{article}
+
+
+\usepackage{comment}
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\setmainfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\setmonofont{DejaVu Sans Mono}[Scale=0.88]
+\newfontfamily\greekfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\newfontfamily\greekfonttt{DejaVu Sans Mono}[Scale=0.88]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage[unicode,hidelinks]{hyperref}
+\hypersetup{pdftitle={Ασκήσεις 6}}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+\newcommand{\eps}{\varepsilon}
+
+\theoremstyle{definition}
+\newtheorem{question}{Άσκηση}
+\newcommand{\HALT}{\operatorname{HALT}}
+\setlist[enumerate]{label=(\alph*),leftmargin=*,itemsep=3pt,topsep=5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small ΗΥ280 (2026) - Τσουρακάκης}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\DefineVerbatimEnvironment{pseudocode}{Verbatim}{fontsize=\small,xleftmargin=1em}
+
+
+\begin{document}
+\begin{center}
+\horrule{0.4pt}\\[0.15cm]
+{\large\textbf{ΗΥ 280 \textemdash{} Θεωρία Υπολογισμού}}\\[0.1cm]
+{Ασκήσεις 6 \textemdash{} Γλώσσες}\\[0.1cm]
+{Χαράλαμπος Ε. Τσουρακάκης}\\
+\horrule{0.4pt}
+\end{center}
+
+\begin{center}\fbox{\begin{minipage}{0.93\linewidth}
+\textbf{Οδηγίες για τις ασκήσεις}
+\begin{itemize}[leftmargin=*,itemsep=6pt]
+\item \textbf{Ασκήσεις 1-4:} Αποτελούν μέρος του παραδοτέου.
+\end{itemize}
+\end{minipage}}\end{center}\medskip
+
+\begin{question}[$\bigstar$ Πληθάριθμος της συνένωσης]
+Για πεπερασμένες γλώσσες $A,B$ υπάρχουν ακριβώς $|A|\,|B|$ ζεύγη
+$(x,y)\in A\times B$, και κάθε ζεύγος παράγει τη συμβολοσειρά $xy$.
+
+\begin{enumerate}
+\item Για $A=\{0,1\}$ και $B=\{1,2\}$ βρείτε το $AB$ και συγκρίνετε το
+$|AB|$ με το $|A|\,|B|$.
+
+\item Για $A=\{0,01\}$ και $B=\{1,11\}$ βρείτε το $AB$.
+Ισχύει $|AB|=|A|\,|B|$;
+
+\item Αποδείξτε ότι για πεπερασμένες γλώσσες $A,B$ ισχύει
+\[
+|AB|\leq |A|\,|B|.
+\]
+\end{enumerate}
+\end{question}
+ 
+
+\begin{question}[$\bigstar\bigstar$ Η γλώσσα $\{0,10\}^*$]
+Έστω
+\[
+L=\{0,10\}^*
+\]
+και έστω $K$ η γλώσσα που περιέχει την $\eps$ και όλες τις μη κενές
+δυαδικές συμβολοσειρές που
+
+\begin{enumerate}
+\item τελειώνουν σε $0$, και
+\item δεν περιέχουν την υποσυμβολοσειρά $11$.
+\end{enumerate}
+
+\begin{enumerate}
+\item Γράψτε πέντε συμβολοσειρές του $L$ και επαληθεύστε ότι ανήκουν στο
+$K$.
+
+\item Αποδείξτε ότι $L\subseteq K.$
+
+\item Αποδείξτε ότι $K\subseteq L.$
+
+
+\item Συμπεράνετε ότι $L=K$
+\end{enumerate}
+\end{question}
+ 
+
+
+\begin{question}[$\bigstar\bigstar$ Συμπλήρωμα συμβολοσειράς]
+Για κάθε συμβολοσειρά $w\in\{0,1\}^*$, ορίζουμε το \emph{συμπλήρωμα}
+$w^c$ αντικαθιστώντας κάθε $0$ με $1$ και κάθε $1$ με $0$.
+
+Ισοδύναμα, η συνάρτηση συμπληρώματος ορίζεται αναδρομικά ως εξής:
+\[
+w^c=
+\begin{cases}
+\eps, & w=\eps,\\
+1x^c, & w=0x,\\
+0x^c, & w=1x.
+\end{cases}
+\]
+
+Αποδείξτε ότι:
+
+\begin{enumerate}
+\item Για κάθε $w\in\{0,1\}^*$,
+\[
+|w|=|w^c|.
+\]
+
+\item Για κάθε $x,y\in\{0,1\}^*$,
+\[
+(xy)^c=x^cy^c.
+\]
+
+\item Για κάθε $w\in\{0,1\}^*$,
+\[
+\#(1,w)=\#(0,w^c).
+\]
+
+\item Για κάθε $w\in\{0,1\}^*$,
+\[
+(w^R)^c=(w^c)^R.
+\]
+
+\item Για κάθε $w\in\{0,1\}^*$ και κάθε $n\in\mathbb N$,
+\[
+(w^n)^c=(w^c)^n.
+\]
+\end{enumerate}
+\end{question}
+ 
+
+\begin{question}[$\bigstar\bigstar$ Αντιστροφή γλώσσας]
+Υπενθυμίζουμε ότι η \emph{αντιστροφή} $w^R$ μιας συμβολοσειράς $w$
+ορίζεται αναδρομικά ως εξής:
+\[
+w^R=
+\begin{cases}
+\eps, & w=\eps,\\
+x^R a, & w=ax,
+\end{cases}
+\]
+όπου $a\in\Sigma$ και $x\in\Sigma^*$.
+
+Η \emph{αντιστροφή} μιας γλώσσας $L$ ορίζεται ως
+\[
+L^R=\{w^R\mid w\in L\}.
+\]
+
+\begin{enumerate}
+\item[] Αποδείξτε ότι για κάθε γλώσσα $L$,
+$ 
+(L^*)^R=(L^R)^*.$
+
+%\item Αποδείξτε ότι αν η $L$ είναι κανονική γλώσσα, τότε και η $L^R$
+%είναι κανονική.
+\end{enumerate}
+
+Μπορείτε να χρησιμοποιήσετε χωρίς απόδειξη τις ακόλουθες ιδιότητες:
+\[
+L^*L^*=L^*, (w^R)^R=w,(xy)^R=y^Rx^R.
+\]
+\end{question}
+ 
+
+
+\end{document}

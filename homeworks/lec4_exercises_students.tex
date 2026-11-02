@@ -1,0 +1,271 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[margin=1.9cm]{geometry}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setotherlanguage{english}
+\setmainfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\setmonofont{DejaVu Sans Mono}[Scale=0.88]
+\newfontfamily\greekfont{DejaVu Serif}[ItalicFont={DejaVu Serif},ItalicFeatures={FakeSlant=0.2},BoldItalicFont={DejaVu Serif Bold},BoldItalicFeatures={FakeSlant=0.2}]
+\newfontfamily\greekfonttt{DejaVu Sans Mono}[Scale=0.88]
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{fancyvrb}
+\usepackage{fancyhdr}
+\usepackage[unicode,hidelinks]{hyperref}
+\hypersetup{pdftitle={Ασκήσεις 4ης διάλεξης: Επαγωγή}}
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}
+\theoremstyle{definition}
+\newtheorem{question}{Άσκηση}
+\setlist[enumerate]{label=(\alph*),leftmargin=*,itemsep=3pt,topsep=5pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+\setlength{\emergencystretch}{3em}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[L]{\small ΗΥ280 (2026) - Τσουρακάκης}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\DefineVerbatimEnvironment{pseudocode}{Verbatim}{fontsize=\small,xleftmargin=1em}
+
+
+\usepackage{booktabs}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,lindenmayersystems}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\rev}{\mathrm{rev}}
+\newcommand{\st}{$^{\bigstar}$}  % δυσκολότερο
+\newcommand{\gi}[1]{\item[(#1)]}
+
+% Νιφάδα Koch: αξίωμα τρίγωνο, κανόνας F -> F+F--F+F, γωνία 60°.
+\pgfdeclarelindenmayersystem{Koch}{%
+  \rule{F -> F+F--F+F}}
+\newcommand{\kochstage}[2]{% #1 = n, #2 = μήκος βήματος
+  \begin{tikzpicture}
+    \draw[line join=round,thin]
+      l-system[l-system={Koch, axiom=F--F--F, order=#1, step=#2, angle=60}];
+  \end{tikzpicture}}
+
+\pgfdeclarelindenmayersystem{KochExercise}{
+  \rule{F -> F+F--F+F}
+}
+
+\begin{document}
+\begin{center}
+\horrule{0.4pt}\\[0.15cm]
+{\large\textbf{ΗΥ 280 \textemdash{} Θεωρία Υπολογισμού}}\\[0.1cm]
+{Ασκήσεις 4ης διάλεξης: Επαγωγή}\\[0.1cm]
+{Χαράλαμπος Ε. Τσουρακάκης}\\
+\horrule{0.4pt}
+\end{center}
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.93\linewidth}
+\textbf{Πώς να δουλέψετε το φύλλο.}
+
+\begin{itemize}
+\item Οι Ασκήσεις 1, 2, 3 είναι παραδοτέες.
+\item Η άσκηση με τη \textbf{νιφάδα του Koch} είναι
+\textbf{προαιρετική}, αλλά συνιστάται.
+Συνδέει την επαγωγή με τη γεωμετρία και τις λέξεις πάνω σε ένα
+αλφάβητο, οδηγώντας σε ένα εντυπωσιακό αποτέλεσμα:
+ένα σχήμα με άπειρη περίμετρο αλλά πεπερασμένο εμβαδόν!
+Δοκιμάστε να την προσεγγίσετε βήμα προς βήμα,
+ακόμη κι αν δεν ολοκληρώσετε όλα τα ερωτήματα.
+
+\item {\bf Ξεκινήστε νωρίς και ελάτε στις ώρες γραφείου}
+\item Σύμβαση: $\N=\{0,1,2,\dots\}$.
+\end{itemize}
+
+\end{minipage}%
+}
+\end{center}
+\medskip
+
+
+\begin{question}[Πύργοι του Ανόι]\label{q:hanoi}
+Έχουμε $n$ δίσκους διαφορετικού μεγέθους στον στύλο $A$, με τον μεγαλύτερο στη βάση, και
+θέλουμε να τους μεταφέρουμε στον στύλο $C$, με βοηθητικό τον $B$. Σε κάθε κίνηση
+μετακινούμε έναν δίσκο από την κορυφή ενός στύλου, χωρίς να τον τοποθετήσουμε ποτέ πάνω σε
+μικρότερο.
+\begin{enumerate}[itemsep=0pt]
+\gi{α} Περιγράψτε αναδρομικό αλγόριθμο και γράψτε την αναδρομική σχέση $H(n)$ για το πλήθος
+των κινήσεών του.
+\gi{β} Αποδείξτε ότι $H(n)=2^n-1$.
+\gi{γ} \st{} Δείξτε ότι \emph{κάθε} αλγόριθμος χρειάζεται τουλάχιστον $2^n-1$ κινήσεις.
+Γιατί το (β) μόνο του δεν το δείχνει αυτό;
+\end{enumerate}
+\end{question}
+
+
+\begin{question}[Δυαδική αναπαράσταση]\label{q:binary}\leavevmode\par
+Αποδείξτε με ισχυρή επαγωγή ότι κάθε ακέραιος $n\ge1$ έχει δυαδική αναπαράσταση,
+δηλαδή γράφεται ως $n=\sum_{i=0}^{r}b_i2^i$ με $b_i\in\{0,1\}$ και $b_r=1$.
+\end{question}
+
+ 
+
+\begin{question}[Δύο ακολουθίες, μία επαγωγική πρόταση]
+Οι ακολουθίες $(a_n)$ και $(b_n)$ ορίζονται ταυτόχρονα ως εξής:
+\[
+a_0=1,\quad b_0=0,\qquad
+\begin{cases}
+a_{n+1}=2a_n+b_n,\\
+b_{n+1}=a_n+2b_n,
+\end{cases}
+\quad n\in\N.
+\]
+\begin{enumerate}
+\gi{α} Υπολογίστε τα ζεύγη $(a_n,b_n)$ για $n=0,1,2,3$.
+\gi{β} Αποδείξτε \emph{ταυτόχρονα} ότι, για κάθε $n\in\N$,
+\[
+A(n):\ a_n=\frac{3^n+1}{2},\qquad
+B(n):\ b_n=\frac{3^n-1}{2}.
+\]
+Όπως στο παράδειγμα του διακόπτη στις διαφάνειες,
+χρησιμοποιήστε την πρόταση $Q(n):=A(n)\wedge B(n)$.
+\gi{γ} Ένας φοιτητής υποθέτει μόνο την $A(k)$, αλλά στον υπολογισμό
+του $a_{k+1}=2a_k+b_k$ αντικαθιστά και το $b_k$ με
+$(3^k-1)/2$, χωρίς άλλη αιτιολόγηση.
+Ποιο είναι το κενό και πώς το αποφεύγει η απόδειξη του (β);
+\end{enumerate}
+\end{question}
+
+       
+  \begin{question}[ $\bigstar \bigstar \bigstar $ Η νιφάδα του Koch: άπειρη περίμετρος, πεπερασμένο εμβαδόν]
+\label{q:koch}
+\leavevmode\par
+
+Η \emph{νιφάδα του Koch} κατασκευάζεται αναδρομικά μέσω μιας
+ακολουθίας πολυγωνικών χωρίων $K_0,K_1,K_2,\dots$.
+Κάθε χωρίο περιλαμβάνει το εσωτερικό και το σύνορό του.
+
+\begin{itemize}[itemsep=3pt]
+\item $K_0$: ισόπλευρο τρίγωνο πλευράς $1$.
+
+\item $K_{n+1}$: κάθε πλευρά του συνόρου του $K_n$ χωρίζεται
+σε τρία ίσα τμήματα. Στο μεσαίο τρίτο κατασκευάζουμε
+ένα ισόπλευρο τρίγωνο προς το εξωτερικό του $K_n$.
+Αντικαθιστούμε το μεσαίο τρίτο με τις δύο άλλες πλευρές
+του νέου τριγώνου:
+\[
+\begin{tikzpicture}[baseline=-2pt,scale=0.9]
+  \draw (0,0)--(1.5,0);
+  \draw[->] (1.7,0)--(2.2,0);
+  \draw (2.4,0)--(2.9,0)--(3.15,0.433)--(3.4,0)--(3.9,0);
+\end{tikzpicture}
+\]
+Το $K_{n+1}$ είναι το νέο χωρίο που προκύπτει.
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[line width=0.45pt]
+  \foreach \n in {0,1,2,3}{
+    \begin{scope}[xshift={3.6*\n cm}]
+      \pgfmathsetlengthmacro{\KochStep}{3cm/pow(3,\n)}
+      \draw[l-system={KochExercise,
+                     axiom=F--F--F,
+                     order=\n,
+                     step=\KochStep,
+                     angle=60}]
+        lindenmayer system;
+      \node[font=\small] at (1.5,-2.95) {$K_{\n}$};
+    \end{scope}
+  }
+\end{tikzpicture}
+\end{center}
+
+Έστω $N_n$ το πλήθος των ευθύγραμμων τμημάτων του συνόρου
+του $K_n$, $\ell_n$ το μήκος καθενός,
+$P_n=N_n\ell_n$ η περίμετρος και $A_n$ το εμβαδόν του $K_n$.
+
+\begin{enumerate}[itemsep=6pt]
+
+\gi{α} \textbf{Πλήθος τμημάτων και περίμετρος.}
+Υπολογίστε τα $N_n,\ell_n,P_n$ για $n=0,1,2$.
+Γράψτε αναδρομικές σχέσεις για τα $N_{n+1}$ και $\ell_{n+1}$
+και αποδείξτε με επαγωγή ότι
+\[
+N_n=3\cdot4^n,
+\qquad
+\ell_n=3^{-n}
+\qquad\text{για κάθε }n\ge0.
+\]
+Βρείτε έναν τύπο για την $P_n$.
+Τι συμβαίνει στην περίμετρο καθώς $n\to\infty$;
+
+\gi{β} \textbf{Η αναδρομική σχέση του εμβαδού.}
+Εξηγήστε γιατί στο πέρασμα $K_n\to K_{n+1}$ προστίθενται
+ακριβώς $N_n$ ισόπλευρα τρίγωνα, το καθένα με πλευρά
+$\ell_n/3$. Συμπεράνετε ότι
+\[
+A_0=\frac{\sqrt3}{4},
+\qquad
+A_{n+1}
+=
+A_n+N_n\cdot\frac{\sqrt3}{4}
+                 \left(\frac{\ell_n}{3}\right)^2.
+\]
+
+\emph{Μπορείτε να θεωρήσετε δεδομένο ότι τα εσωτερικά
+των νέων τριγώνων είναι ξένα μεταξύ τους και δεν τέμνουν
+το $K_n$. Κοινές πλευρές ή κορυφές επιτρέπονται.}
+
+\gi{γ} \textbf{Πεπερασμένο εμβαδόν.}
+Αποδείξτε με επαγωγή ότι
+\[
+A_n
+=
+\frac{\sqrt3}{4}
+\left(
+\frac85-\frac35\left(\frac49\right)^n
+\right)
+\qquad\text{για κάθε }n\ge0.
+\]
+Συμπεράνετε ότι $A_n<\frac85A_0$ για κάθε $n\ge0$
+και υπολογίστε το $\lim_{n\to\infty}A_n$.
+Εξηγήστε γιατί δεν υπάρχει αντίφαση με το αποτέλεσμα του (α).
+
+\gi{δ} \st{} \textbf{Aπό το σχήμα στη λέξη.}
+Το σύνορο μπορεί να περιγραφεί και ως \emph{λέξη}
+πάνω στο αλφάβητο $\Sigma=\{F,+,-\}$,
+όπως στη χελώνα της Logo.
+
+Κατά τη σχεδίαση της λέξης $w_n$, τα σύμβολα
+ερμηνεύονται ως εξής:
+\[
+\begin{array}{c@{\quad:\quad}l}
+F & \text{προχώρα κατά }3^{-n},\\
++ & \text{στρίψε }60^\circ\text{ αριστερά},\\
+- & \text{στρίψε }60^\circ\text{ δεξιά}.
+\end{array}
+\]
+
+Ξεκινάμε με
+\[
+w_0=F{-}{-}F{-}{-}F.
+\]
+Η $w_{n+1}$ προκύπτει από τη $w_n$ αν αντικαταστήσουμε
+\emph{ταυτόχρονα} κάθε εμφάνιση του $F$ σύμφωνα με τον κανόνα
+\[
+F\longmapsto F{+}F{-}{-}F{+}F.
+\]
+Τα σύμβολα $+$ και $-$ παραμένουν ως έχουν.
+
+Αποδείξτε με επαγωγή ότι το πλήθος των εμφανίσεων του $F$
+στη $w_n$ είναι $3\cdot4^n$ και ότι
+\[
+|w_n|=7\cdot4^n.
+\]
+Το $|w_n|$ μετρά \emph{όλα} τα σύμβολα της λέξης,
+όχι μόνο τις εμφανίσεις του $F$.
+
+\end{enumerate}
+\end{question}
+
+
+\end{document}
