@@ -1,5 +1,6 @@
 # CS280 Bonus Project: DFA Compression and Formal Verification
 # Deadline: 18/12/2026
+# Η προφορική εξέταση είναι υποχρεωτική. Χωρίς συμμετοχή στην προφορική εξέταση και ουσιαστική κατανόηση της εργασίας, ο βαθμός είναι 0.
 ## Professor C.E. Tsourakakis 
 ## Responsible TA: Noah Wahl
 
