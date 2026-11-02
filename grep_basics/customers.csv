@@ -1,0 +1,6 @@
+id,name,email,phone,postal,country,amount,status
+101,Maria,maria@acme.gr,+30 6912345678,71201,GR,1250.50,PAID
+102,John,john@example.com,617-555-0199,02115,US,89.10,DUE
+103,Eleni,eleni@@bad.gr,2810-555000,71305,GR,410.00,PAID
+104,Alice,alice@lab.edu,212-555-0104,10027-1234,US,999.99,HOLD
+105,Nikos,nikos@foo.gr,+30 6987654321,71A02,GR,72.00,DUE
