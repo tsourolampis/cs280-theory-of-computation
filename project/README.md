@@ -206,6 +206,36 @@ The compressed automaton must support a deterministic lookup operation $\mathrm{
 If an explicit transition on `a` exists at state `q`, use it. 
 Otherwise, follow the default link and continue searching **without consuming `a`**.
 
+### What must be preserved by compression?
+
+The compressed automaton is **not expected to have the same explicit transition table** as the original DFA. In fact, the purpose of compression is precisely to remove many explicit transitions.
+
+For example, the original DFA may contain
+
+$$
+\delta_M(q,a)=r,
+$$
+
+while the compressed automaton may contain no explicit transition on `a` from `q`. Instead, lookup may follow one or more default links,
+
+$$
+q \dashrightarrow p_1 \dashrightarrow p_2 \xrightarrow{a} r,
+$$
+
+where the default links do **not** consume the input symbol.
+
+Thus the relevant correctness condition is not equality of the stored transition tables. It is equality of the **effective transition** after default resolution:
+
+$$
+\forall q\in Q,\ \forall a\in\Sigma,
+\qquad
+\mathrm{lookup}_C(q,a)=\delta_M(q,a).
+$$
+
+In other words, the internal paths followed by the two representations may be different, but after consuming one actual input symbol they must end in the same DFA state.
+
+> **The explicit transition tables may differ; what must be identical is the state reached after each actual input symbol is consumed.**
+
 ---
 
 ## 7. Task C — Python testing with pytest
@@ -219,7 +249,7 @@ At minimum, your tests should cover:
 - correct compressed lookup,
 - correct handling of default links,
 - termination of lookup,
-- agreement between the original and compressed automata on individual transitions,
+- agreement between the original transition $\delta_M(q,a)$ and the **resolved compressed lookup** $\mathrm{lookup}_C(q,a)$ for every state-symbol pair,
 - agreement on many test strings,
 - malformed compressed representations.
 
@@ -244,8 +274,19 @@ Even millions of successful test cases do not establish equivalence for every po
 
 ## 8. Task D — Formal verification in Lean
 
-For every original DFA $M$ and compressed automaton $C$, formally prove that they are equivalent.
-The intended proof has two levels.
+The original DFA and the compressed D²FA do **not** have the same stored transition representation.
+
+The original DFA stores a direct transition
+
+$$
+\delta_M(q,a),
+$$
+
+whereas the compressed representation may need to follow several default links before finding an explicit transition on `a`.
+
+Therefore, your Lean proof should not try to prove equality of the explicit transition tables.
+
+Instead, prove that the compressed lookup operation implements the same **effective transition function** as the original DFA.
 
 ### Step 1: one-symbol equivalence
 
@@ -257,11 +298,33 @@ $$
 \mathrm{lookup}_C(q,a)=\delta_M(q,a).
 $$
 
-This is a finite property.
+For example, the original DFA may execute
+
+$$
+q \xrightarrow{a} r,
+$$
+
+while the compressed automaton may internally execute
+
+$$
+q \dashrightarrow p_1
+  \dashrightarrow p_2
+  \xrightarrow{a} r.
+$$
+
+These paths are different, but they are equivalent because the default links do not consume input and both computations end in the same state `r` after consuming `a`.
+
+This one-symbol property is finite: for an automaton with $|Q|$ states and the byte alphabet, there are exactly
+
+$$
+256|Q|
+$$
+
+state-symbol pairs to certify.
 
 ### Step 2: equivalence on arbitrary strings
 
-Use induction on the input word to prove
+Once one-symbol equivalence is established, prove by induction on the input word that
 
 $$
 \forall q\in Q,\ \forall w\in\Sigma^*,
@@ -269,16 +332,38 @@ $$
 \mathrm{run}_C(q,w)=M.\mathrm{evalFrom}(q,w).
 $$
 
-From the common start state and accepting states, conclude that both automata accept exactly the same language.
+The induction should be stated for an arbitrary starting state `q`, not only the initial state.
 
-The key idea is:
+The reason is simple:
+
+- both machines start the next symbol in the same state,
+- the one-symbol theorem says they move to the same next state,
+- therefore the induction hypothesis applies to the remaining suffix.
+
+Hence the two machines are in the same state after every consumed prefix.
+
+Finally, because the original and compressed automata have the same start state and the same accepting states,
 
 $$
-\underbrace{\forall q,a}_{\text{finite local verification}}
-\quad + \quad
+w\in L(C)
+\iff
+w\in L(M)
+$$
+
+for every possible input word $w$.
+
+The proof structure is therefore
+
+$$
+\boxed{
+\underbrace{\forall q,a}_{\text{finite local equivalence}}
+\quad+\quad
 \underbrace{\text{induction on }w}_{\text{generic proof}}
-\quad \Longrightarrow \quad
-\underbrace{\forall q,w}_{\text{all possible inputs}}.
+\quad\Longrightarrow\quad
+\underbrace{\forall q,w}_{\text{same state after every word}}
+\quad\Longrightarrow\quad
+\underbrace{L(C)=L(M)}_{\text{same language}}
+}
 $$
 
 A Lean starter file may be provided in `lean/`.
