@@ -13,10 +13,10 @@ M₁.accepts = M₂.accepts := by
   -- lemma: running on a word commutes with f, from ANY starting state
   have comm : ∀ (x : List α) (s : σ₁),
     f (M₁.evalFrom s x) = M₂.evalFrom (f s) x := by
-    intro x
+    intro x -- pull x out of the goal
     induction x with
-    | nil => intro s; simp [DFA.evalFrom]
-    | cons a x ih => intro s; simp only [DFA.evalFrom_cons, ih, hstep]
+    | nil => intro s; simp [DFA.evalFrom] -- induction on empty word
+    | cons a x ih => intro s; simp only [DFA.evalFrom_cons, ih, hstep] -- induction step
   -- Now compare membership word by word
-  ext x
-  simp only [DFA.mem_accepts, DFA.eval, hacc, comm, hstart]
+  ext x -- unfold definition of equal sets
+  simp only [DFA.mem_accepts, DFA.eval, hacc, comm, hstart] -- let lean figure out the rest

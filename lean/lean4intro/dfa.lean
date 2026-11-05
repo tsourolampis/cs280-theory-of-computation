@@ -15,15 +15,16 @@ inductive state where
 | q₀ : state
 | q₁ : state
 
-namespace state
+namespace state -- we can use q₀ and q₁ without specifying state
 
-def M : DFA (state) (Fin 1) :=
+def M : DFA (state) (Fin 1) := -- We define different states as a TYPE above
+                               -- (Fin x) is the set of Natural numbers less than x
 ⟨
   fun x s => match x with
-  | q₀ => match s with | 0 => q₁
-  | q₁ => match s with | 0 => q₀,
-  q₀,
-  {q₀}
+  | q₀ => match s with | 0 => q₁  -- reading 0 in q₀ transitions to state q₁
+  | q₁ => match s with | 0 => q₀, -- reading 0 in q₁ transitions to state q₀
+  q₀,  -- start state
+  {q₀} -- accepting states
 ⟩
 
 end state
@@ -31,10 +32,10 @@ end state
 -- first version of acceptance
 @[simp]
 def accepts {Q : Type u} {σ : Type v} (M : DFA Q σ) (w : List σ) :=
-  ∃ r : Fin (w.length + 1) → Q,
-  (r 0 = M.q₀) ∧
-  (∀ i : Fin (w.length), M.δ (r (i.castSucc)) w[i] = r (i.castSucc + 1)) ∧
-  (r ⟨ w.length, by simp ⟩ ∈ M.F)
+  ∃ r : Fin (w.length + 1) → Q, -- transitions are assigned to numbers
+  (r 0 = M.q₀) ∧ -- acceptance path starts in M's starting state
+  (∀ i : Fin (w.length), M.δ (r (i.castSucc)) w[i] = r (i.castSucc + 1)) ∧ -- valid transitions
+  (r ⟨ w.length, by simp ⟩ ∈ M.F) -- path ends in accepting state
 
 def L {Q : Type u} {σ : Type v} (M : DFA Q σ) : Set (List σ) := {w | accepts M w}
 
