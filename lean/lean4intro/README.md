@@ -28,5 +28,5 @@ For all other questions, post them in the courses e-lean forum or come to my off
 
 The files `dfa.lean` and `dfa_hom.lean` contain examples for how to encode DFAs in Lean.
 It is important to note that the definitions in `dfa.lean` are available in Lean's Mathlib library.
-The proof in `dfa_hom.lean` checks whether two DFAs in the same Alphabet but different states accept the same language.
+The proof in `dfa_hom.lean` checks whether two DFAs on the same alphabet but different states accept the same language.
 This is an important puzzle piece for the [Project](https://github.com/tsourolampis/cs280-theory-of-computation/tree/main/project).
